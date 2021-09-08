@@ -1,0 +1,67 @@
+{% set name = "tadacnv" %}
+{% set version = "1.0.1" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
+  sha256: "e376a00b016c90f56c390ba0eec02213a3f7270480e4149141e6407c025280d1"
+
+build:
+  number: 0
+  entry_points:
+    - annotate_tads = tadacnv.annotate_tads:main
+    - annotate_cnvs = tadacnv.annotate_cnvs:main
+    - classification_run = tadacnv.classification_run:main
+    - predict_variants = tadacnv.predict_variants:main
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
+
+requirements:
+  host:
+    - matplotlib >=3.3
+    - networkx >=2.5
+    - numpy >=1.19
+    - pandas >=1.1
+    - pip
+    - python = 3.6
+    - pyyaml >=5.4
+    - scikit-learn >=0.24
+    - scipy >=1.5
+    - seaborn >=0.11
+  run:
+    - matplotlib >=3.3
+    - networkx >=2.5
+    - numpy >=1.19
+    - pandas >=1.1
+    - python = 3.6
+    - pyyaml >=5.4
+    - scikit-learn >=0.24
+    - scipy >=1.5
+    - seaborn >=0.11
+
+test:
+  imports:
+    - tadacnv
+    - tadacnv.examples
+    - tadacnv.lib
+    - tests
+  commands:
+    - annotate_tads --help
+    - annotate_cnvs --help
+    - classification_run --help
+    - predict_variants --help
+
+about:
+  home: "https://github.com/jakob-he/TADA"
+  license: MIT
+  license_family: MIT
+  license_file: ""
+  summary: "The package allows to annotate CNVs and predict their pathogenic effect."
+  doc_url: ""
+  dev_url: ""
+
+extra:
+  recipe-maintainers:
+    - jakob-he
